@@ -1,8 +1,9 @@
 
 COMMAND_SIZE=193
 ANSWER_SIZE=192
+
 def decode_value(value):
-    return int.to_bytes(value, 64, byteorder="big", signed=True)
+    return int.to_bytes(int(value), 64, byteorder="big", signed=True)
 
 
 def encode_value(decoded_value):
@@ -25,23 +26,37 @@ def decode_command(cmd, key=None, value=None):
 
 
 def encode_command(data):
-    command_code = data[0]
+    command_code = data[0:1]
     if command_code == b"1":
-        return "SELECT"
-    key = data[1:129].decode()
+        return ("SELECT", )
+    key = data[1:-64].decode()
     if command_code == b"2":
         return "SELECT", key
-    value = encode_value(data[129:])
+    value = encode_value(data[-64:])
     if command_code == b"3":
         return "INSERT", key, value
-    raise RuntimeError("Encode {} failed".format(data[:129]))
+    raise RuntimeError("Encode {} failed".format(data[:-64]))
 
 
 def decode_answer(key, value):
-    # Длина ответа = 192 байта
+    # max длина ответа = 192 байта
     return key.encode() + decode_value(value)
 
 
 def encode_answer(data):
-    return data[:128].decode(), encode_value(data[128:])
+    return data[:-64].decode(), encode_value(data[-64:])
 
+
+
+
+if __name__=="__main__":
+    commands = ["SELECT", "SELECT A", "INSERT A 5"]
+    for com in commands:
+        print(com)
+        decoded = decode_command(*com.split())
+        print(decoded)
+        ecmd = encode_command(decoded)
+        print(ecmd)
+        s = " ".join([str(e) for e in ecmd])
+        print(s)
+        assert com == s, "'{}' != '{}'".format(com, s)

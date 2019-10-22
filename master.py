@@ -52,10 +52,12 @@ class Master:
         while not recv_queue.empty():
             node = recv_queue.get()
             data = node.recv(serializer.ANSWER_SIZE)
-            if data == None:
+            if data == b'0':
                 continue
             key, value = serializer.encode_answer(data)
             assert key not in items.keys(), RuntimeError("Key dublicate. {}".format(key))
+            items[key]=value
+            print("select *: {} {}".format(key, value))
             recv_queue.put(node)
         return items
 
@@ -65,14 +67,16 @@ class Master:
         answ = self.nodes[node_id].recv(serializer.ANSWER_SIZE)
         if answ == None:
             return None
-        return serializer.encode_answer(answ)
+        s = serializer.encode_answer(answ)
+        return s
 
     def insert_item_to_node(self, cmd, key, value, node_id,):
         data = serializer.decode_command(cmd, key, value)
         self.nodes[node_id].send(data)
+        self.nodes_keys_set[node_id].add(key)
 
     def apply_commmand(self, command):
-        cmd, *args = command.split()
+        cmd, *args = command.upper().split()
         if cmd == "SELECT":
             if len(args) == 0:
                 return self.get_all_items(cmd)
@@ -105,8 +109,16 @@ if __name__=="__main__":
     parser.add_argument("--input", nargs="?", type=argparse.FileType("r"), default=sys.stdin)
     parser.add_argument("nodes", nargs="*")
     args = parser.parse_args()
-    nodes = [(ip, port) for ip, port in map(lambda x: x.split(":"), args.nodes)]
+    nodes = [(ip, int(port)) for ip, port in map(lambda x: x.split(":"), args.nodes)]
     worker = Master(nodes)
+
+    for line in args.input:
+        line = line.strip()
+        if not line:
+            continue
+        print("Command {}".format(line))
+        answ = worker.apply_commmand(line)
+        print(answ)
 
 
 
