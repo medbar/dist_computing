@@ -68,9 +68,12 @@ class Master:
         items = {}
         for node_id, keys in enumerate(self.nodes_keys_set):
             for key in keys:
-                k, v = self.get_item_from_node(cmd, key, node_id)
+                mb_item = self.get_item_from_node(cmd, key, node_id)
+                if not mb_item:
+                    continue
+                k, v = mb_item
                 assert k not in items, RuntimeError("key {} have dublicate. Node {}".format(key, node_id))
-                items[k]=v
+                items[k] = v
 
         return "\n".join(map(lambda x: "{} {}".format(x[0], x[1]), items.items()))
 
@@ -79,6 +82,8 @@ class Master:
         self.nodes[node_id].send(data)
         answ = self.nodes[node_id].recv(serializer.ANSWER_SIZE)
         if answ == None:
+            return None
+        if answ == b'0':
             return None
         s = serializer.encode_answer(answ)
         return s
@@ -96,9 +101,12 @@ class Master:
             for i, node_keys_set in enumerate(self.nodes_keys_set):
                 if args[0] in node_keys_set:
                     print("MASTER INFO: Selecting from node {}".format(i), file=sys.stderr)
-                    return "{} {}".format(*self.get_item_from_node(cmd=cmd,
+                    answ = self.get_item_from_node(cmd=cmd,
                                                    key=args[0],
-                                                   node_id=i))
+                                                   node_id=i)
+                    if not answ:
+                        return "Select error"
+                    return "{} {}".format(*answ)
             raise "Key {} not found in database".format(args[0])
         if cmd == "INSERT":
             min_len_node_id = 0
@@ -112,7 +120,7 @@ class Master:
                 if l < min_len:
                     min_len = l
                     min_len_node_id = i
-            print("MASTER INFO: Inserting to node {}".format(i), file=sys.stderr )
+            print("MASTER INFO: Inserting to node {}".format(min_len_node_id), file=sys.stderr )
             self.insert_item_to_node(cmd=cmd,
                                      key=args[0],
                                      value=args[1],

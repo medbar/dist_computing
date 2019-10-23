@@ -33,6 +33,8 @@ class Worker:
                         encoded_data = serializer.decode_answer(key=args[0],
                                                                 value=self.__data[args[0]])
                         conn.send(encoded_data)
+                    else:
+                        conn.send(b'0')
                 elif cmd == "INSERT":
                     self.__data[args[0]] = args[1]
                     print("WORKER INFO: INSERTED key={}, value={}".format(*args), file=sys.stderr)

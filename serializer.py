@@ -38,13 +38,16 @@ def encode_command(data):
     raise RuntimeError("Encode {} failed".format(data[:-64]))
 
 
-def decode_answer(key, value):
+def decode_answer(key, value, padding=False):
     # max длина ответа = 192 байта
-    return key.encode() + decode_value(value)
+    e = key.encode() + decode_value(value)
+    if padding:
+        e = b'\x20'*(ANSWER_SIZE-len(e)) + e
+    return e
 
 
 def encode_answer(data):
-    return data[:-64].decode(), encode_value(data[-64:])
+    return data[:-64].decode().strip(), encode_value(data[-64:])
 
 
 
