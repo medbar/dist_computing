@@ -1,17 +1,16 @@
-
-
-
-
-def parse_file(fname):
-    with open(fname, "r", encoding="utf-8") as f:
-        commands = [s.strip().split(" ", 1) for s in f.readlines()]
-    return commands
+import queue
 
 def command_loader(fname):
+    # Возвращает очередь с приоритетом. Время в секундах
     print("INFO: Loading command and timecodes from {} file".format(fname))
     with open(fname, "r", encoding="utf-8") as f:
-        command_list = [(t, s) for t, s in map(lambda l:l.split(",", 1), f.readlines())]
-    command_list.sort(key=lambda c: c[0])
+        commands = [(int(s_time)/1000, s_command)
+                    for s_time, s_command in map(lambda s: s.strip().split(" ", 1), f.readlines())]
+
+    com_queue = queue.PriorityQueue()
+    for l in commands:
+        com_queue.put(l)
+    return com_queue
 
 
 #

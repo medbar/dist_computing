@@ -1,6 +1,9 @@
 import socket
 import serializer
 import queue
+import command_list_parser
+import time
+import sys
 
 # На вход системы должны подаваться следующий набор файлов:
 # • 3 файла списка команд с меткой времени начала их выполнения
@@ -30,18 +33,18 @@ class Master:
         self.nodes_keys_set = []
         for ipport in node_list:
             node = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            print("INFO: Init connection to {}".format(ipport))
+            print("INFO: Init connection to {}".format(ipport),file=sys.stderr)
             node.connect(ipport)
-            print("INFO: Connected to node {}".format(ipport))
+            print("INFO: Connected to node {}".format(ipport),file=sys.stderr)
             self.nodes.append(node)
             self.nodes_keys_set.append(set())
 
     def close(self):
         for node in self.nodes:
             node.close()
-        print("INFO: All connections closed")
+        print("INFO: All connections closed",file=sys.stderr)
 
-    def get_all_items(self, cmd):
+    def get_all_items_queue(self, cmd):
         decoded_cmd = serializer.decode_command(cmd)
         for node in self.nodes:
             node.send(decoded_cmd)
@@ -56,10 +59,20 @@ class Master:
                 continue
             key, value = serializer.encode_answer(data)
             assert key not in items.keys(), RuntimeError("Key dublicate. {}".format(key))
-            items[key]=value
-            print("select *: {} {}".format(key, value))
+            items[key] = value
+            print("select *: {} {}".format(key, value), file=sys.stderr)
             recv_queue.put(node)
         return items
+
+    def get_all_items(self, cmd):
+        items = {}
+        for node_id, keys in enumerate(self.nodes_keys_set):
+            for key in keys:
+                k, v = self.get_item_from_node(cmd, key, node_id)
+                assert k not in items, RuntimeError("key {} have dublicate. Node {}".format(key, node_id))
+                items[k]=v
+
+        return "\n".join(map(lambda x: "{} {}".format(x[0], x[1]), items.items()))
 
     def get_item_from_node(self, cmd, key, node_id):
         data = serializer.decode_command(cmd=cmd, key=key)
@@ -82,18 +95,21 @@ class Master:
                 return self.get_all_items(cmd)
             for i, node_keys_set in enumerate(self.nodes_keys_set):
                 if args[0] in node_keys_set:
-                    return self.get_item_from_node(cmd=cmd,
+                    print("INFO: Selecting from node {}".format(i), file=sys.stderr)
+                    return "{} {}".format(*self.get_item_from_node(cmd=cmd,
                                                    key=args[0],
-                                                   node_id=i)
+                                                   node_id=i))
             raise "Key {} not found in database".format(args[0])
         if cmd == "INSERT":
             min_len_node_id = 0
             min_len=len(self.nodes_keys_set[0])
             for i, node_key_set in enumerate(self.nodes_keys_set):
+                assert args[0] not in node_key_set, RuntimeError("Key dublicate")
                 l = len(node_key_set)
                 if l < min_len:
                     min_len = l
                     min_len_node_id = i
+            print("INFO: Inserting to node {}".format(i))
             self.insert_item_to_node(cmd=cmd,
                                      key=args[0],
                                      value=args[1],
@@ -104,21 +120,39 @@ class Master:
 
 if __name__=="__main__":
     import argparse
-    import sys
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--input", nargs="?", type=argparse.FileType("r"), default=sys.stdin)
-    parser.add_argument("nodes", nargs="*")
-    args = parser.parse_args()
-    nodes = [(ip, int(port)) for ip, port in map(lambda x: x.split(":"), args.nodes)]
-    worker = Master(nodes)
 
-    for line in args.input:
-        line = line.strip()
-        if not line:
-            continue
-        print("Command {}".format(line))
-        answ = worker.apply_commmand(line)
-        print(answ)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--input")
+    parser.add_argument("nodes", nargs="*")
+    parser.add_argument("--latency", type=float, default=50/1000)
+    args = parser.parse_args()
+
+    commands_queue = command_list_parser.command_loader(args.input)
+    nodes = [(ip, int(port)) for ip, port in map(lambda x: x.split(":"), args.nodes)]
+    master = Master(nodes)
+    start_time = time.time()
+
+    while not commands_queue.empty():
+        t, com = commands_queue.get()
+        print(com)
+        print("INFO: Start '{}' command. Time {}. Command time - {}".format(com, time.time() - start_time, t),
+              file=sys.stderr)
+        delta_t = start_time + t - time.time() - args.latency
+        if delta_t > 0:
+            print("INFO: Sleep {} seconds".format(delta_t),
+                  file=sys.stderr)
+            time.sleep(start_time + t - time.time() - args.latency)
+        if time.time() - start_time > t:
+            print("WARNING: Command was {} ms late".format(round((time.time() - start_time - t)*1000)),
+                  file=sys.stderr)
+        answ = master.apply_commmand(com)
+        if answ:
+            print(answ)
+        print("INFO: Done '{}' at time {}".format(com, time.time() - start_time), file=sys.stderr)
+    print("INFO: Done at time {}".format(time.time() - start_time), file=sys.stderr)
+
+
+
 
 
 
