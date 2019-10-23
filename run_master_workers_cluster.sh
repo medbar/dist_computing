@@ -19,6 +19,6 @@ python3 master.py --input  $file $nodes 2> log/master.log
 
 #kill -2 $(jobs -p)
 #wait
-jobs -p
+#jobs -p
 echo "Done"
 exit 0

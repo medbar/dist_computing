@@ -104,7 +104,10 @@ class Master:
             min_len_node_id = 0
             min_len=len(self.nodes_keys_set[0])
             for i, node_key_set in enumerate(self.nodes_keys_set):
-                assert args[0] not in node_key_set, RuntimeError("Key dublicate")
+                if args[0] in node_key_set:
+                    # Тогда это не insert, а update
+                    min_len_node_id = i
+                    break
                 l = len(node_key_set)
                 if l < min_len:
                     min_len = l

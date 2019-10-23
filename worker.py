@@ -14,12 +14,14 @@ class Worker:
         print("WORKER INFO: Waiting connection from master node", file=sys.stderr)
         conn, addr = self.serv.accept()
         print("WORKER INFO: Master {} connected".format(addr), file=sys.stderr)
+        num_commands = 0
         while True:
             data = conn.recv(serializer.COMMAND_SIZE)
             if not data: break
             try:
                 cmd, *args = serializer.encode_command(data)
                 print("WORKER INFO: command {} {}".format(cmd, args), file=sys.stderr)
+                num_commands += 1
                 if cmd == "SELECT":
                     if len(args) == 0:
                         for k, v in self.__data.items():
@@ -40,6 +42,8 @@ class Worker:
                 print("WARNING: Execute '{}' failed.\n".format(data) +
                       "Exception - '{}'".format(e), file=sys.stderr)
         print("WORKER INFO: Connection closed.", file=sys.stderr)
+        print("WORKER INFO: Num commands {}. Data contains {}".format(num_commands, len(self.__data)),
+              file=sys.stderr)
         conn.close()
 
 

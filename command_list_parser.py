@@ -7,7 +7,7 @@ def command_loader(fname):
     print("INFO: Loading command and timecodes from {} file".format(fname), file=sys.stderr)
     with open(fname, "r", encoding="utf-8") as f:
         commands = [(int(s_time)/1000, s_command)
-                    for s_time, s_command in map(lambda s: s.strip().split(" ", 1), f.readlines())]
+                    for s_time, s_command in map(lambda s: s.strip().replace(",", "").split(" ", 1), f.readlines())]
 
     com_queue = queue.PriorityQueue()
     for l in commands:
