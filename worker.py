@@ -1,5 +1,6 @@
 import socket
 import serializer
+import sys
 
 class Worker:
     def __init__(self, ip, port):
@@ -10,15 +11,15 @@ class Worker:
 
     def listen(self):
         # while True:
-        print("INFO: Waiting connection from master node")
+        print("WORKER INFO: Waiting connection from master node", file=sys.stderr)
         conn, addr = self.serv.accept()
-        print("INFO: Master {} connected".format(addr))
+        print("WORKER INFO: Master {} connected".format(addr), file=sys.stderr)
         while True:
             data = conn.recv(serializer.COMMAND_SIZE)
             if not data: break
             try:
                 cmd, *args = serializer.encode_command(data)
-                print("INFO: command {} {}".format(cmd, args))
+                print("WORKER INFO: command {} {}".format(cmd, args), file=sys.stderr)
                 if cmd == "SELECT":
                     if len(args) == 0:
                         for k, v in self.__data.items():
@@ -32,13 +33,13 @@ class Worker:
                         conn.send(encoded_data)
                 elif cmd == "INSERT":
                     self.__data[args[0]] = args[1]
-                    print("INFO: INSERTED key={}, value={}".format(*args))
+                    print("WORKER INFO: INSERTED key={}, value={}".format(*args), file=sys.stderr)
                 else:
                     raise RuntimeError("Wrong command {}".format((cmd, *args)))
             except Exception as e:
                 print("WARNING: Execute '{}' failed.\n".format(data) +
-                      "Exception - '{}'".format(e))
-        print("INFO: Connection closed.")
+                      "Exception - '{}'".format(e), file=sys.stderr)
+        print("WORKER INFO: Connection closed.", file=sys.stderr)
         conn.close()
 
 
@@ -48,10 +49,12 @@ if __name__=="__main__":
     parser.add_argument("ip")
     parser.add_argument("port", type=int)
     args = parser.parse_args()
-
+    print(vars(args), file=sys.stderr)
     worker = Worker(args.ip, args.port)
-    while True:
-        try:
-            worker.listen()
-        except KeyboardInterrupt:
-            print("INFO: Stoping worker {}:{}".format(args.ip, args.port))
+    #while True:
+    try:
+        worker.listen()
+    except KeyboardInterrupt:
+        print("WORKER INFO: Stoping worker {}:{}".format(args.ip, args.port))
+        #break
+    exit(0)

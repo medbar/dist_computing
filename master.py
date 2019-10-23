@@ -33,16 +33,16 @@ class Master:
         self.nodes_keys_set = []
         for ipport in node_list:
             node = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            print("INFO: Init connection to {}".format(ipport),file=sys.stderr)
+            print("MASTER INFO: Init connection to {}".format(ipport),file=sys.stderr)
             node.connect(ipport)
-            print("INFO: Connected to node {}".format(ipport),file=sys.stderr)
+            print("MASTER INFO: Connected to node {}".format(ipport),file=sys.stderr)
             self.nodes.append(node)
             self.nodes_keys_set.append(set())
 
     def close(self):
         for node in self.nodes:
             node.close()
-        print("INFO: All connections closed",file=sys.stderr)
+        print("MASTER INFO: All connections closed",file=sys.stderr)
 
     def get_all_items_queue(self, cmd):
         decoded_cmd = serializer.decode_command(cmd)
@@ -95,7 +95,7 @@ class Master:
                 return self.get_all_items(cmd)
             for i, node_keys_set in enumerate(self.nodes_keys_set):
                 if args[0] in node_keys_set:
-                    print("INFO: Selecting from node {}".format(i), file=sys.stderr)
+                    print("MASTER INFO: Selecting from node {}".format(i), file=sys.stderr)
                     return "{} {}".format(*self.get_item_from_node(cmd=cmd,
                                                    key=args[0],
                                                    node_id=i))
@@ -109,7 +109,7 @@ class Master:
                 if l < min_len:
                     min_len = l
                     min_len_node_id = i
-            print("INFO: Inserting to node {}".format(i))
+            print("MASTER INFO: Inserting to node {}".format(i), file=sys.stderr )
             self.insert_item_to_node(cmd=cmd,
                                      key=args[0],
                                      value=args[1],
@@ -126,6 +126,7 @@ if __name__=="__main__":
     parser.add_argument("nodes", nargs="*")
     parser.add_argument("--latency", type=float, default=50/1000)
     args = parser.parse_args()
+    print(vars(args), file=sys.stderr)
 
     commands_queue = command_list_parser.command_loader(args.input)
     nodes = [(ip, int(port)) for ip, port in map(lambda x: x.split(":"), args.nodes)]
@@ -135,11 +136,11 @@ if __name__=="__main__":
     while not commands_queue.empty():
         t, com = commands_queue.get()
         print(com)
-        print("INFO: Start '{}' command. Time {}. Command time - {}".format(com, time.time() - start_time, t),
+        print("MASTER INFO: Start '{}' command. Time {}. Command time - {}".format(com, time.time() - start_time, t),
               file=sys.stderr)
         delta_t = start_time + t - time.time() - args.latency
         if delta_t > 0:
-            print("INFO: Sleep {} seconds".format(delta_t),
+            print("MASTER INFO: Sleep {} seconds".format(delta_t),
                   file=sys.stderr)
             time.sleep(start_time + t - time.time() - args.latency)
         if time.time() - start_time > t:
@@ -148,8 +149,8 @@ if __name__=="__main__":
         answ = master.apply_commmand(com)
         if answ:
             print(answ)
-        print("INFO: Done '{}' at time {}".format(com, time.time() - start_time), file=sys.stderr)
-    print("INFO: Done at time {}".format(time.time() - start_time), file=sys.stderr)
+        print("MASTER INFO: Done '{}' at time {}".format(com, time.time() - start_time), file=sys.stderr)
+    print("MASTER INFO: Done at time {}".format(time.time() - start_time), file=sys.stderr)
 
 
 

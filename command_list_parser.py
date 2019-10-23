@@ -1,8 +1,10 @@
 import queue
+import sys
+
 
 def command_loader(fname):
     # Возвращает очередь с приоритетом. Время в секундах
-    print("INFO: Loading command and timecodes from {} file".format(fname))
+    print("INFO: Loading command and timecodes from {} file".format(fname), file=sys.stderr)
     with open(fname, "r", encoding="utf-8") as f:
         commands = [(int(s_time)/1000, s_command)
                     for s_time, s_command in map(lambda s: s.strip().split(" ", 1), f.readlines())]
