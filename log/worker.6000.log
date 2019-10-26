@@ -1,0 +1,21 @@
+{'ip': 'localhost', 'port': 6000}
+WORKER INFO: Waiting connection from master node
+WORKER INFO: Master ('127.0.0.1', 50238) connected
+WORKER INFO: command INSERT ['A', 4]
+WORKER INFO: INSERTED key=A, value=4
+WORKER INFO: command INSERT ['S', 8]
+WORKER INFO: INSERTED key=S, value=8
+WORKER INFO: command INSERT ['BB', 112]
+WORKER INFO: INSERTED key=BB, value=112
+WORKER INFO: command SELECT ['S']
+WORKER INFO: command SELECT ['S']
+WORKER INFO: command SELECT ['S']
+WORKER INFO: command SELECT ['S']
+WORKER INFO: command SELECT ['S']
+WORKER INFO: command SELECT ['A']
+WORKER INFO: command SELECT ['S']
+WORKER INFO: command SELECT ['BB']
+WORKER INFO: command INSERT ['AAA', 123]
+WORKER INFO: INSERTED key=AAA, value=123
+WORKER INFO: Connection closed.
+WORKER INFO: Num commands 12. Data contains 4

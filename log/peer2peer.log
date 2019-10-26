@@ -1,0 +1,159 @@
+DATAKEEPER INFO: Waiting connection from nodes
+DATAKEEPER INFO: Waiting connection from nodes
+MASTER INFO: Init connection to ('localhost', 5000)
+MASTER INFO: Init connection to ('localhost', 5000)
+MASTER INFO: Connected to node ('localhost', 5000)
+DATAKEEPER INFO: Node ('127.0.0.1', 50916) connected. ID=0
+MASTER INFO: Init connection to ('localhost', 5001)
+MASTER INFO: Connected to node ('localhost', 5000)
+MASTER INFO: Init connection to ('localhost', 5001)
+DATAKEEPER INFO: Node ('127.0.0.1', 50917) connected. ID=1
+MASTER INFO: Connected to node ('localhost', 5001)
+DATAKEEPER INFO: Node ('127.0.0.1', 50918) connected. ID=0
+MASTER INFO: Connected to node ('localhost', 5001)
+DATAKEEPER INFO: Node ('127.0.0.1', 50919) connected. ID=1
+DATAKEEPER INFO: Start listen 0 node
+DATAKEEPER INFO: Start listen 0 node
+DATAKEEPER INFO: Start listen 1 node
+DATAKEEPER INFO: Start listen 1 node
+INFO: Loading command and timecodes from test.2.txt file
+INFO: Loading command and timecodes from test.3.txt file
+MASTER INFO: Start 'insert b 4' command. Time 0.0. Command time - 1.0
+MASTER INFO: Sleep 0.95 seconds
+MASTER INFO: Start 'insert a 4' command. Time 0.0. Command time - 0.1
+MASTER INFO: Sleep 0.04999990463256836 seconds
+DATAKEEPER INFO: command SELECT ['A']
+DATAKEEPER INFO: command SELECT ['A']
+MASTER INFO: Inserting to node 1
+DATAKEEPER INFO: command INSERT ['A', 4]
+DATAKEEPER INFO: INSERTED key=A, value=4
+MASTER INFO: Done 'insert a 4' at time 0.05107378959655762
+MASTER INFO: Start 'select s' command. Time 0.05107378959655762. Command time - 7.1
+MASTER INFO: Sleep 6.998926115036011 seconds
+DATAKEEPER INFO: command SELECT ['B']
+DATAKEEPER INFO: command SELECT ['B']
+MASTER INFO: Inserting to node 0
+DATAKEEPER INFO: command INSERT ['B', 4]
+DATAKEEPER INFO: INSERTED key=B, value=4
+MASTER INFO: Done 'insert b 4' at time 0.951099157333374
+MASTER INFO: Start 'insert s 8' command. Time 0.951099157333374. Command time - 2.0
+MASTER INFO: Sleep 0.9989008426666259 seconds
+DATAKEEPER INFO: command SELECT ['S']
+DATAKEEPER INFO: command SELECT ['S']
+MASTER INFO: Inserting to node 0
+DATAKEEPER INFO: command INSERT ['S', 8]
+DATAKEEPER INFO: INSERTED key=S, value=8
+MASTER INFO: Done 'insert s 8' at time 1.9513280391693115
+MASTER INFO: Start 'insert sdsdafsfasfa -555' command. Time 1.9513280391693115. Command time - 3.0
+MASTER INFO: Sleep 0.9986719608306884 seconds
+DATAKEEPER INFO: command SELECT ['SDSDAFSFASFA']
+DATAKEEPER INFO: command SELECT ['SDSDAFSFASFA']
+MASTER INFO: Inserting to node 0
+DATAKEEPER INFO: command INSERT ['SDSDAFSFASFA', -555]
+DATAKEEPER INFO: INSERTED key=SDSDAFSFASFA, value=-555
+MASTER INFO: Done 'insert sdsdafsfasfa -555' at time 2.951462745666504
+MASTER INFO: Start 'select b' command. Time 2.9524424076080322. Command time - 4.0
+MASTER INFO: Sleep 0.9975575923919677 seconds
+DATAKEEPER INFO: command SELECT ['B']
+MASTER INFO: Done 'select b' at time 3.9510281085968018
+MASTER INFO: Start 'insert b 8' command. Time 3.9510281085968018. Command time - 4.5
+MASTER INFO: Sleep 0.49897189140319825 seconds
+DATAKEEPER INFO: command SELECT ['B']
+MASTER INFO: Inserting to node 0
+DATAKEEPER INFO: command INSERT ['B', 8]
+DATAKEEPER INFO: INSERTED key=B, value=8
+MASTER INFO: Done 'insert b 8' at time 4.451181411743164
+MASTER INFO: Start 'select b' command. Time 4.451181411743164. Command time - 5.0
+MASTER INFO: Sleep 0.49881858825683595 seconds
+DATAKEEPER INFO: command SELECT ['B']
+MASTER INFO: Done 'select b' at time 4.951382398605347
+MASTER INFO: Start 'insert b 12' command. Time 4.951382398605347. Command time - 5.9
+MASTER INFO: Sleep 0.8986176967620849 seconds
+DATAKEEPER INFO: command SELECT ['B']
+MASTER INFO: Inserting to node 0
+DATAKEEPER INFO: command INSERT ['B', 12]
+DATAKEEPER INFO: INSERTED key=B, value=12
+MASTER INFO: Done 'insert b 12' at time 5.851894378662109
+MASTER INFO: Start 'select b' command. Time 5.851894378662109. Command time - 6.0
+MASTER INFO: Sleep 0.09810562133789062 seconds
+DATAKEEPER INFO: command SELECT ['B']
+MASTER INFO: Done 'select b' at time 5.952287673950195
+MASTER INFO: Start 'insert bb 112' command. Time 5.952287673950195. Command time - 6.05
+MASTER INFO: Sleep 0.047712278366088864 seconds
+DATAKEEPER INFO: command SELECT ['BB']
+DATAKEEPER INFO: command SELECT ['BB']
+MASTER INFO: Inserting to node 0
+DATAKEEPER INFO: command INSERT ['BB', 112]
+DATAKEEPER INFO: INSERTED key=BB, value=112
+MASTER INFO: Done 'insert bb 112' at time 6.002363681793213
+MASTER INFO: Start 'select s' command. Time 6.002363681793213. Command time - 6.5
+MASTER INFO: Sleep 0.4476363182067871 seconds
+DATAKEEPER INFO: command SELECT ['S']
+MASTER INFO: Done 'select s' at time 6.451266527175903
+MASTER INFO: Start 'select s' command. Time 6.451266527175903. Command time - 6.6
+MASTER INFO: Sleep 0.09873337745666504 seconds
+DATAKEEPER INFO: command SELECT ['S']
+MASTER INFO: Done 'select s' at time 6.551432132720947
+MASTER INFO: Start 'select s' command. Time 6.551432132720947. Command time - 7.0
+MASTER INFO: Sleep 0.39856786727905275 seconds
+DATAKEEPER INFO: command SELECT ['S']
+MASTER INFO: Done 'select s' at time 6.952157974243164
+MASTER INFO: Start 'select s' command. Time 6.952157974243164. Command time - 7.1
+MASTER INFO: Sleep 0.0978419303894043 seconds
+DATAKEEPER INFO: command SELECT ['S']
+DATAKEEPER INFO: command SELECT ['S']
+MASTER INFO: Done 'select s' at time 7.051543235778809
+MASTER INFO: Start 'select s' command. Time 7.0525407791137695. Command time - 7.3
+MASTER INFO: Sleep 0.19745917320251466 seconds
+MASTER INFO: Done 'select s' at time 7.0525407791137695
+MASTER INFO: Start 'select qwertyuiopasdfghjklzxcvbnm1234567890_$' command. Time 7.0525407791137695. Command time - 7.72
+MASTER INFO: Sleep 0.6174592494964599 seconds
+DATAKEEPER INFO: command SELECT ['S']
+MASTER INFO: Done 'select s' at time 7.251137971878052
+MASTER INFO: Start 'insert qwertyuiopasdfghjklzxcvbnm1234567890_$ -123456789' command. Time 7.251137971878052. Command time - 7.7
+MASTER INFO: Sleep 0.3988620758056641 seconds
+DATAKEEPER INFO: command SELECT ['QWERTYUIOPASDFGHJKLZXCVBNM1234567890_$']
+DATAKEEPER INFO: command SELECT ['QWERTYUIOPASDFGHJKLZXCVBNM1234567890_$']
+MASTER INFO: Inserting to node 0
+MASTER INFO: Done 'insert qwertyuiopasdfghjklzxcvbnm1234567890_$ -123456789' at time 7.651235103607178
+MASTER INFO: Start 'select' command. Time 7.65223503112793. Command time - 8.0
+MASTER INFO: Sleep 0.2977649688720703 seconds
+DATAKEEPER INFO: command INSERT ['QWERTYUIOPASDFGHJKLZXCVBNM1234567890_$', -123456789]
+DATAKEEPER INFO: INSERTED key=QWERTYUIOPASDFGHJKLZXCVBNM1234567890_$, value=-123456789
+DATAKEEPER INFO: command SELECT ['QWERTYUIOPASDFGHJKLZXCVBNM1234567890_$']
+MASTER INFO: Done 'select qwertyuiopasdfghjklzxcvbnm1234567890_$' at time 7.671280860900879
+MASTER INFO: Start 'select b' command. Time 7.671280860900879. Command time - 13.1
+MASTER INFO: Sleep 5.37871904373169 seconds
+DATAKEEPER INFO: command SELECT []
+DATAKEEPER INFO: command SELECT []
+MASTER INFO: Done 'select' at time 7.952092170715332
+MASTER INFO: Start 'insert aaa 123' command. Time 7.952092170715332. Command time - 9.0
+MASTER INFO: Sleep 0.9979078292846679 seconds
+DATAKEEPER INFO: command SELECT ['AAA']
+DATAKEEPER INFO: command SELECT ['AAA']
+MASTER INFO: Inserting to node 0
+MASTER INFO: Done 'insert aaa 123' at time 8.951333999633789
+MASTER INFO: Start 'select b' command. Time 8.952319145202637. Command time - 10.0
+MASTER INFO: Sleep 0.9976808547973632 seconds
+DATAKEEPER INFO: command INSERT ['AAA', 123]
+DATAKEEPER INFO: INSERTED key=AAA, value=123
+DATAKEEPER INFO: command SELECT ['B']
+MASTER INFO: Done 'select b' at time 9.95141863822937
+MASTER INFO: Start 'select b' command. Time 9.95141863822937. Command time - 13.1
+MASTER INFO: Sleep 3.0985812664031984 seconds
+DATAKEEPER INFO: command SELECT ['B']
+DATAKEEPER INFO: command SELECT ['B']
+MASTER INFO: Done 'select b' at time 13.051440000534058
+MASTER INFO: Done at time 13.051440000534058
+MASTER INFO: Done 'select b' at time 13.05243992805481
+MASTER INFO: Done at time 13.05243992805481
+DATAKEEPER INFO: Connection 0 closed.
+DATAKEEPER INFO: Connection 0 closed.
+DATAKEEPER INFO: Num commands 9. Data contains 1
+DATAKEEPER INFO: Connection 1 closed.
+DATAKEEPER INFO: Num commands 31. Data contains 6
+Readers done
+DATAKEEPER INFO: Connection 1 closed.
+DATAKEEPER INFO: Num commands 9. Data contains 1
+DATAKEEPER INFO: Num commands 31. Data contains 6
+Datakeepers done

@@ -1,0 +1,86 @@
+{'input': 'test.1', 'nodes': ['localhost:6000', 'localhost:6001'], 'latency': 0.05}
+INFO: Loading command and timecodes from test.1 file
+MASTER INFO: Init connection to ('localhost', 6000)
+MASTER INFO: Connected to node ('localhost', 6000)
+MASTER INFO: Init connection to ('localhost', 6001)
+MASTER INFO: Connected to node ('localhost', 6001)
+MASTER INFO: Start 'insert a 4' command. Time 0.0003802776336669922. Command time - 0.1
+MASTER INFO: Sleep 0.04959554672241211 seconds
+MASTER INFO: Inserting to node 1
+MASTER INFO: Done 'insert a 4' at time 0.05100703239440918
+MASTER INFO: Start 'insert b 4' command. Time 0.05138087272644043. Command time - 1.0
+MASTER INFO: Sleep 0.8986086368560791 seconds
+MASTER INFO: Inserting to node 1
+MASTER INFO: Done 'insert b 4' at time 0.9502193927764893
+MASTER INFO: Start 'insert s 8' command. Time 0.9505603313446045. Command time - 2.0
+MASTER INFO: Sleep 0.9994177341461181 seconds
+MASTER INFO: Inserting to node 1
+MASTER INFO: Done 'insert s 8' at time 1.9503231048583984
+MASTER INFO: Start 'insert sdsdafsfasfa -555' command. Time 1.9509131908416748. Command time - 3.0
+MASTER INFO: Sleep 0.9990660667419433 seconds
+MASTER INFO: Inserting to node 1
+MASTER INFO: Done 'insert sdsdafsfasfa -555' at time 2.951174736022949
+MASTER INFO: Start 'select b' command. Time 2.951854944229126. Command time - 4.0
+MASTER INFO: Sleep 0.9981255054473877 seconds
+MASTER INFO: Selecting from node 1
+MASTER INFO: Done 'select b' at time 3.9510273933410645
+MASTER INFO: Start 'insert b 8' command. Time 3.951538324356079. Command time - 4.5
+MASTER INFO: Sleep 0.4984418869018555 seconds
+MASTER INFO: Inserting to node 1
+MASTER INFO: Done 'insert b 8' at time 4.450511932373047
+MASTER INFO: Start 'select b' command. Time 4.451018333435059. Command time - 5.0
+MASTER INFO: Sleep 0.4989602088928223 seconds
+MASTER INFO: Selecting from node 1
+MASTER INFO: Done 'select b' at time 4.950842618942261
+MASTER INFO: Start 'insert b 12' command. Time 4.951148986816406. Command time - 5.9
+MASTER INFO: Sleep 0.8988377571105957 seconds
+MASTER INFO: Inserting to node 1
+MASTER INFO: Done 'insert b 12' at time 5.851248502731323
+MASTER INFO: Start 'select b' command. Time 5.85171914100647. Command time - 6.0
+MASTER INFO: Sleep 0.09826107025146484 seconds
+MASTER INFO: Selecting from node 1
+MASTER INFO: Done 'select b' at time 5.9516754150390625
+MASTER INFO: Start 'insert bb 112' command. Time 5.95221209526062. Command time - 6.05
+MASTER INFO: Sleep 0.047767114639282224 seconds
+MASTER INFO: Inserting to node 1
+MASTER INFO: Done 'insert bb 112' at time 6.001155138015747
+MASTER INFO: Start 'select s' command. Time 6.001482248306274. Command time - 6.5
+MASTER INFO: Sleep 0.44849867820739747 seconds
+MASTER INFO: Selecting from node 0
+MASTER INFO: Done 'select s' at time 6.451887130737305
+MASTER INFO: Start 'select s' command. Time 6.452685832977295. Command time - 6.6
+MASTER INFO: Sleep 0.0972928524017334 seconds
+MASTER INFO: Selecting from node 0
+MASTER INFO: Done 'select s' at time 6.551850080490112
+MASTER INFO: Start 'select s' command. Time 6.552377700805664. Command time - 7.0
+MASTER INFO: Sleep 0.397601318359375 seconds
+MASTER INFO: Selecting from node 0
+MASTER INFO: Done 'select s' at time 6.95093846321106
+MASTER INFO: Start 'select s' command. Time 6.951478004455566. Command time - 7.1
+MASTER INFO: Sleep 0.09849662780761718 seconds
+MASTER INFO: Selecting from node 0
+MASTER INFO: Done 'select s' at time 7.051477432250977
+MASTER INFO: Start 'select s' command. Time 7.052018880844116. Command time - 7.3
+MASTER INFO: Sleep 0.19796009063720704 seconds
+MASTER INFO: Selecting from node 0
+MASTER INFO: Done 'select s' at time 7.250978708267212
+MASTER INFO: Start 'insert qwertyuiopasdfghjklzxcvbnm1234567890_$ -123456789' command. Time 7.2515552043914795. Command time - 7.7
+MASTER INFO: Sleep 0.3983959674835205 seconds
+MASTER INFO: Inserting to node 1
+MASTER INFO: Done 'insert qwertyuiopasdfghjklzxcvbnm1234567890_$ -123456789' at time 7.650696277618408
+MASTER INFO: Start 'select' command. Time 7.651212215423584. Command time - 8.0
+MASTER INFO: Sleep 0.2987703800201416 seconds
+MASTER INFO: Done 'select' at time 7.954090118408203
+MASTER INFO: Start 'insert aaa 123' command. Time 7.954536199569702. Command time - 9.0
+MASTER INFO: Sleep 0.9954490184783935 seconds
+MASTER INFO: Inserting to node 1
+MASTER INFO: Done 'insert aaa 123' at time 8.950450658798218
+MASTER INFO: Start 'select b' command. Time 8.950971364974976. Command time - 10.0
+MASTER INFO: Sleep 0.9990071773529052 seconds
+MASTER INFO: Selecting from node 1
+MASTER INFO: Done 'select b' at time 9.9514741897583
+MASTER INFO: Start 'select b' command. Time 9.951822519302368. Command time - 13.1
+MASTER INFO: Sleep 3.098155450820923 seconds
+MASTER INFO: Selecting from node 1
+MASTER INFO: Done 'select b' at time 13.051843643188477
+MASTER INFO: Done at time 13.051876783370972
